@@ -1,9 +1,9 @@
 require 'ADB'
 
-require_relative '../../../lib/stf/client'
-require_relative '../../../lib/stf/log/log'
-require_relative '../../../lib/stf/errors'
-require_relative 'stop_debug_session_interactor'
+require 'stf/client'
+require 'stf/log/log'
+require 'stf/errors'
+require 'stf/interactor/stop_debug_session_interactor'
 
 class StopAllDebugSessionsInteractor
   include Log

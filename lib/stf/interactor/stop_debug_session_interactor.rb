@@ -1,8 +1,8 @@
 require 'ADB'
 
-require_relative '../../../lib/stf/client'
-require_relative '../../../lib/stf/log/log'
-require_relative '../../../lib/stf/errors'
+require 'stf/client'
+require 'stf/log/log'
+require 'stf/errors'
 
 class StopDebugSessionInteractor
 
@@ -25,12 +25,23 @@ class StopDebugSessionInteractor
 
     1..10.times do
       success = @stf.stop_debug(device.serial)
-      break if success == true
+      if success == true
+        break
+      elsif logger.error 'Can\'t stop debug session. Retrying'
+      end
     end
 
     1..10.times do
       success = @stf.remove_device(device.serial)
-      break if success == true
+      if success == true
+        break
+      elsif logger.error 'Can\'t remove device from user devices. Retrying'
+      end
+    end
+
+    if success == true
+      logger.info "Successfully removed #{remoteConnectUrl}"
+    elsif logger.error "Error removing #{remoteConnectUrl}"
     end
 
     return success

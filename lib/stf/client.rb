@@ -2,9 +2,9 @@ require 'net/http'
 require 'json'
 require 'ostruct'
 
-require_relative '../stf/version'
-require_relative 'errors'
-require_relative 'log/log'
+require 'stf/version'
+require 'stf/log/log'
+require 'stf/errors'
 
 module Stf
   class Client
