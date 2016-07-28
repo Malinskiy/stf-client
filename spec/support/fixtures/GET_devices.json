@@ -1,0 +1,423 @@
+{
+  "success": true,
+  "devices": [
+    {
+      "abi": "arm64-v8a",
+      "airplaneMode": false,
+      "battery": {
+        "health": "good",
+        "level": 100,
+        "scale": 100,
+        "source": "usb",
+        "status": "full",
+        "temp": 26.5,
+        "voltage": 4.311
+      },
+      "browser": {
+        "apps": [
+          {
+            "id": "com.android.browser/.BrowserActivity",
+            "name": "Browser",
+            "selected": false,
+            "system": true,
+            "type": "android-browser",
+            "developer": "Google Inc."
+          },
+          {
+            "id": "com.android.chrome/com.google.android.apps.chrome.Main",
+            "name": "Chrome",
+            "selected": false,
+            "system": true,
+            "type": "chrome",
+            "developer": "Google Inc."
+          }
+        ],
+        "selected": true
+      },
+      "channel": "z/YgnWq7ogej71Xs8T9YpcHf16Y=",
+      "createdAt": "2016-07-20T11:54:01.049Z",
+      "display": {
+        "density": 3,
+        "fps": 60,
+        "height": 1920,
+        "id": 0,
+        "rotation": 0,
+        "secure": true,
+        "size": 5.464510440826416,
+        "url": "ws://openstf.io:7404",
+        "width": 1080,
+        "xdpi": 403.4110107421875,
+        "ydpi": 403.0409851074219
+      },
+      "manufacturer": "HUAWEI",
+      "model": " RIO-L02",
+      "network": {
+        "connected": true,
+        "failover": false,
+        "roaming": false,
+        "subtype": "",
+        "type": "WIFI"
+      },
+      "operator": ",",
+      "owner": null,
+      "phone": {
+        "iccid": null,
+        "imei": "867116020269243",
+        "network": "UNKNOWN",
+        "phoneNumber": null
+      },
+      "platform": "Android",
+      "presenceChangedAt": "2016-07-22T10:45:53.975Z",
+      "present": true,
+      "product": "RIO-L02",
+      "provider": {
+        "channel": "tPal22z/QRSkZJvLlUx7eA==",
+        "name": "19c4bdfb8812"
+      },
+      "ready": true,
+      "remoteConnect": false,
+      "remoteConnectUrl": null,
+      "reverseForwards": [],
+      "sdk": "22",
+      "serial": "UDKDU15A20001021",
+      "status": 3,
+      "statusChangedAt": "2016-07-22T10:45:53.834Z",
+      "version": "5.1",
+      "using": false
+    },
+    {
+      "abi": "armeabi-v7a",
+      "airplaneMode": false,
+      "battery": {
+        "health": "good",
+        "level": 100,
+        "scale": 100,
+        "source": "usb",
+        "status": "full",
+        "temp": 26.5,
+        "voltage": 4.303
+      },
+      "browser": {
+        "apps": [
+          {
+            "id": "com.android.browser/.BrowserActivity",
+            "name": "Browser",
+            "selected": false,
+            "system": false,
+            "type": "android-browser",
+            "developer": "Google Inc."
+          },
+          {
+            "id": "com.android.chrome/com.google.android.apps.chrome.Main",
+            "name": "Chrome",
+            "selected": false,
+            "system": false,
+            "type": "chrome",
+            "developer": "Google Inc."
+          }
+        ],
+        "selected": false
+      },
+      "channel": "6+RbGiChCBFh7NCC+pT0DWDRmbg=",
+      "createdAt": "2016-07-20T11:53:57.852Z",
+      "display": {
+        "density": 3,
+        "fps": 60,
+        "height": 1920,
+        "id": 0,
+        "rotation": 0,
+        "secure": true,
+        "size": 4.9176459312438965,
+        "url": "ws://openstf.io:7400",
+        "width": 1080,
+        "xdpi": 449.7040100097656,
+        "ydpi": 447.4119873046875,
+        "inches": 5
+      },
+      "manufacturer": "XIAOMI",
+      "model": "MI 4W",
+      "network": {
+        "connected": true,
+        "failover": false,
+        "manual": false,
+        "operator": null,
+        "roaming": false,
+        "state": "out_of_service",
+        "subtype": "",
+        "type": "WIFI"
+      },
+      "operator": null,
+      "owner": null,
+      "phone": {
+        "iccid": null,
+        "imei": "865291028835550",
+        "network": "UNKNOWN",
+        "phoneNumber": null
+      },
+      "platform": "Android",
+      "presenceChangedAt": "2016-07-22T10:45:53.931Z",
+      "present": true,
+      "product": "cancro_wc_lte",
+      "provider": {
+        "channel": "tPal22z/QRSkZJvLlUx7eA==",
+        "name": "19c4bdfb8812"
+      },
+      "ready": true,
+      "remoteConnect": false,
+      "remoteConnectUrl": null,
+      "reverseForwards": [],
+      "sdk": "19",
+      "serial": "813240cc",
+      "status": 3,
+      "statusChangedAt": "2016-07-22T10:45:53.835Z",
+      "version": "4.4.4",
+      "name": "Xiaomi Mi 4",
+      "releasedAt": "2014-07-31T15:00:00.000Z",
+      "image": "MI_4W.jpg",
+      "cpu": {
+        "cores": 4,
+        "freq": "2.5",
+        "name": "Qualcomm Snapdragon 801"
+      },
+      "memory": {
+        "ram": 3072,
+        "rom": 16384
+      },
+      "using": false
+    },
+    {
+      "abi": "armeabi-v7a",
+      "airplaneMode": false,
+      "battery": {
+        "health": "good",
+        "level": 98,
+        "scale": 100,
+        "source": "usb",
+        "status": "charging",
+        "temp": 31,
+        "voltage": 4.221
+      },
+      "browser": {
+        "apps": [
+          {
+            "id": "com.android.browser/.BrowserActivity",
+            "name": "Browser",
+            "selected": true,
+            "system": true,
+            "type": "android-browser",
+            "developer": "Google Inc."
+          }
+        ],
+        "selected": true
+      },
+      "channel": "ZU//PlTXowvNZAtf1KtR9XXOmEw=",
+      "createdAt": "2016-07-20T11:54:07.117Z",
+      "display": {
+        "density": 2,
+        "fps": 60.000003814697266,
+        "height": 1280,
+        "id": 0,
+        "rotation": 0,
+        "secure": true,
+        "size": 4.653836250305176,
+        "url": "ws://openstf.io:7464",
+        "width": 720,
+        "xdpi": 315.3103332519531,
+        "ydpi": 315.6504821777344
+      },
+      "manufacturer": "HUAWEI",
+      "model": " HN3-U01",
+      "network": {
+        "connected": false,
+        "failover": false,
+        "roaming": false,
+        "subtype": null,
+        "type": null
+      },
+      "operator": null,
+      "owner": null,
+      "phone": {
+        "iccid": null,
+        "imei": null,
+        "network": "UNKNOWN",
+        "phoneNumber": null
+      },
+      "platform": "Android",
+      "presenceChangedAt": "2016-07-20T12:10:57.941Z",
+      "present": false,
+      "product": "HN3-U01",
+      "provider": {
+        "channel": "aMVysV3rST6jbsrYHO4m0g==",
+        "name": "330dad7e0323"
+      },
+      "ready": true,
+      "reverseForwards": [],
+      "sdk": "17",
+      "serial": "022GPLDU39036997",
+      "status": 3,
+      "statusChangedAt": "2016-07-20T12:05:37.341Z",
+      "version": "4.2.2",
+      "using": true
+    },
+    {
+      "abi": "arm64-v8a",
+      "airplaneMode": false,
+      "battery": {
+        "health": "good",
+        "level": 100,
+        "scale": 100,
+        "source": "usb",
+        "status": "full",
+        "temp": 25.3,
+        "voltage": 4.341
+      },
+      "browser": {
+        "apps": [
+          {
+            "id": "com.sec.android.app.sbrowser/.SBrowserMainActivity",
+            "name": "Browser",
+            "selected": false,
+            "system": true,
+            "type": "samsung-sbrowser",
+            "developer": "Samsung"
+          },
+          {
+            "id": "com.android.chrome/com.google.android.apps.chrome.Main",
+            "name": "Chrome",
+            "selected": false,
+            "system": true,
+            "type": "chrome",
+            "developer": "Google Inc."
+          }
+        ],
+        "selected": false
+      },
+      "channel": "qabz/1dTMwDCyFJ6z/wDF0AF/KY=",
+      "createdAt": "2016-07-20T12:11:05.446Z",
+      "display": {
+        "density": 4,
+        "fps": 59,
+        "height": 2560,
+        "id": 0,
+        "rotation": 0,
+        "secure": true,
+        "size": 5.059174060821533,
+        "url": "ws://openstf.io:7412",
+        "width": 1440,
+        "xdpi": 580.5709838867188,
+        "ydpi": 580.5709838867188
+      },
+      "manufacturer": "SAMSUNG",
+      "model": "SM-G925F",
+      "network": {
+        "connected": true,
+        "failover": false,
+        "roaming": false,
+        "subtype": "",
+        "type": "WIFI"
+      },
+      "operator": null,
+      "owner": null,
+      "phone": {
+        "iccid": null,
+        "imei": "359523065239483",
+        "network": "UNKNOWN",
+        "phoneNumber": null
+      },
+      "platform": "Android",
+      "presenceChangedAt": "2016-07-22T10:45:53.979Z",
+      "present": true,
+      "product": "zeroltexx",
+      "provider": {
+        "channel": "tPal22z/QRSkZJvLlUx7eA==",
+        "name": "19c4bdfb8812"
+      },
+      "ready": true,
+      "remoteConnect": false,
+      "remoteConnectUrl": null,
+      "reverseForwards": [],
+      "sdk": "23",
+      "serial": "05157df550a40412",
+      "status": 3,
+      "statusChangedAt": "2016-07-22T10:45:53.837Z",
+      "version": "6.0.1",
+      "using": false
+    },
+    {
+      "abi": "armeabi-v7a",
+      "airplaneMode": false,
+      "battery": {
+        "health": "good",
+        "level": 100,
+        "scale": 100,
+        "source": "usb",
+        "status": "full",
+        "temp": 26.5,
+        "voltage": 4.318
+      },
+      "browser": {
+        "apps": [
+          {
+            "id": "com.android.chrome/com.google.android.apps.chrome.Main",
+            "name": "Chrome",
+            "selected": true,
+            "system": true,
+            "type": "chrome",
+            "developer": "Google Inc."
+          }
+        ],
+        "selected": true
+      },
+      "channel": "QBo6EIrqjcOy2+ZGi+1+sd3fg0s=",
+      "createdAt": "2016-07-20T11:54:02.461Z",
+      "display": {
+        "density": 3,
+        "fps": 60,
+        "height": 1920,
+        "id": 0,
+        "rotation": 0,
+        "secure": true,
+        "size": 5.147105693817139,
+        "url": "ws://openstf.io:7548",
+        "width": 1080,
+        "xdpi": 428.625,
+        "ydpi": 427.78900146484375
+      },
+      "manufacturer": "SONY",
+      "model": "D6653",
+      "network": {
+        "connected": true,
+        "failover": false,
+        "roaming": false,
+        "subtype": "",
+        "type": "WIFI"
+      },
+      "operator": null,
+      "owner": null,
+      "phone": {
+        "iccid": null,
+        "imei": "355098062477646",
+        "network": "UNKNOWN",
+        "phoneNumber": null
+      },
+      "platform": "Android",
+      "presenceChangedAt": "2016-07-26T08:01:36.872Z",
+      "present": true,
+      "product": "D6653",
+      "provider": {
+        "channel": "tPal22z/QRSkZJvLlUx7eA==",
+        "name": "19c4bdfb8812"
+      },
+      "ready": true,
+      "remoteConnect": false,
+      "remoteConnectUrl": null,
+      "reverseForwards": [],
+      "sdk": "22",
+      "serial": "BH905JCE1E",
+      "status": 3,
+      "statusChangedAt": "2016-07-26T08:01:36.872Z",
+      "version": "5.1.1",
+      "using": false
+    }
+  ]
+}

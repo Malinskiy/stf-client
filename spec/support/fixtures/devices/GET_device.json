@@ -1,0 +1,87 @@
+{
+  "success": true,
+  "device": {
+    "abi": "arm64-v8a",
+    "airplaneMode": false,
+    "battery": {
+      "health": "good",
+      "level": 100,
+      "scale": 100,
+      "source": "usb",
+      "status": "full",
+      "temp": 26.5,
+      "voltage": 4.311
+    },
+    "browser": {
+      "apps": [
+        {
+          "id": "com.android.browser/.BrowserActivity",
+          "name": "Browser",
+          "selected": false,
+          "system": true,
+          "type": "android-browser",
+          "developer": "Google Inc."
+        },
+        {
+          "id": "com.android.chrome/com.google.android.apps.chrome.Main",
+          "name": "Chrome",
+          "selected": false,
+          "system": true,
+          "type": "chrome",
+          "developer": "Google Inc."
+        }
+      ],
+      "selected": true
+    },
+    "channel": "z/YgnWq7ogej71Xs8T9YpcHf16Y=",
+    "createdAt": "2016-07-20T11:54:01.049Z",
+    "display": {
+      "density": 3,
+      "fps": 60,
+      "height": 1920,
+      "id": 0,
+      "rotation": 0,
+      "secure": true,
+      "size": 5.464510440826416,
+      "url": "ws://openstf.io:7404",
+      "width": 1080,
+      "xdpi": 403.4110107421875,
+      "ydpi": 403.0409851074219
+    },
+    "manufacturer": "HUAWEI",
+    "model": " RIO-L02",
+    "network": {
+      "connected": true,
+      "failover": false,
+      "roaming": false,
+      "subtype": "",
+      "type": "WIFI"
+    },
+    "operator": ",",
+    "owner": null,
+    "phone": {
+      "iccid": null,
+      "imei": "867116020269243",
+      "network": "UNKNOWN",
+      "phoneNumber": null
+    },
+    "platform": "Android",
+    "presenceChangedAt": "2016-07-22T10:45:53.975Z",
+    "present": true,
+    "product": "RIO-L02",
+    "provider": {
+      "channel": "tPal22z/QRSkZJvLlUx7eA==",
+      "name": "19c4bdfb8812"
+    },
+    "ready": true,
+    "remoteConnect": false,
+    "remoteConnectUrl": null,
+    "reverseForwards": [],
+    "sdk": "22",
+    "serial": "UDKDU15A20001021",
+    "status": 3,
+    "statusChangedAt": "2016-07-22T10:45:53.834Z",
+    "version": "5.1",
+    "using": false
+  }
+}

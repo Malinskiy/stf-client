@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "user": {
+    "adbKeys": [
+      {
+        "fingerprint": "d2:f9:b0:62:cb:37:19:42:64:58:27:7c:fc:f9:5f:b8",
+        "title": "amalinskiy@C02N2TAG3QT"
+      },
+      {
+        "fingerprint": "55:04:80:6e:89:6d:9f:c9:43:a0:d3:6e:14:2a:a5:67",
+        "title": "mobapp@C07QN0JCG1J1"
+      }
+    ],
+    "createdAt": "2016-07-20T11:53:01.625Z",
+    "email": "stf@openstf.io",
+    "forwards": [],
+    "group": "n5XCz5S2SdWdAlr+t/nY4g==",
+    "ip": "::ffff:127.0.0.1",
+    "lastLoggedInAt": "2016-07-20T11:53:01.625Z",
+    "name": "stf",
+    "settings": {
+      "deviceListActiveTabs": {
+        "details": true,
+        "icons": false
+      },
+      "lastUsedDevice": "05157df550a40412"
+    }
+  }
+}

@@ -1,0 +1,2 @@
+class DeviceNotAvailableError < StandardError
+end
