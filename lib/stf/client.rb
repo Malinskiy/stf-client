@@ -58,16 +58,31 @@ module Stf
     private
 
     def execute(relative_url, type, body='')
-      uri          = URI.parse(@base_url + relative_url)
-      http         = Net::HTTP.new(uri.host)
-      request      = type.new(uri.request_uri, 'Authorization' => "Bearer #{@token}", 'Content-Type' => 'application/json')
+      return execute_absolute @base_url + relative_url, type, body
+    end
+
+    def execute_absolute(url, type, body='', limit = 10)
+      raise ArgumentError, 'too many HTTP redirects' if limit == 0
+
+      uri          = URI.parse(url)
+      http         = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == 'https'
+      request      = type.new(uri, 'Authorization' => "Bearer #{@token}", 'Content-Type' => 'application/json')
       request.body = body
       response     = http.request(request)
 
+      case response
+        when Net::HTTPSuccess then
+          json = JSON.parse(response.body, object_class: OpenStruct)
 
-      json = JSON.parse(response.body, object_class: OpenStruct)
-
-      logger.debug "API returned #{json}"
+          logger.debug "API returned #{json}"
+        when Net::HTTPRedirection then
+          location = response['location']
+          logger.debug "redirected to #{location}"
+          return execute_absolute(location, type, body, limit - 1)
+        else
+          logger.error "API returned #{response.value}"
+      end
 
       return json
     end
