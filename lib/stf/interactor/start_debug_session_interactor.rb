@@ -25,7 +25,7 @@ class StartDebugSessionInteractor
           sleep 5
           next
         end
-        usable_devices = devices.select { |device| device.using == false }
+        usable_devices = devices.select{ |d| d.ready == true && d.present == true && d.using == false }
         if usable_devices.empty?
           logger.error 'All devices are being used. Retrying'
           sleep 5
@@ -63,3 +63,5 @@ class StartDebugSessionInteractor
     end
   end
 end
+
+StartDebugSessionInteractor.new(Stf::Client.new('https://stf.default.svc.agoda.mobi', 'c8c62e3503d246b68d6683c47bc1414a80b9527185494c8ea811f874e9fdb7d2')).execute
