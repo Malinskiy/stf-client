@@ -56,12 +56,10 @@ class StartDebugSessionInteractor
         break
 
         raise new DeviceNotAvailableError
-      rescue DeviceNotAvailableError
+      rescue DeviceNotAvailableError, Net::HTTPFatalError
         logger.error 'Failed to start debug session. Retrying...'
         next
       end
     end
   end
 end
-
-StartDebugSessionInteractor.new(Stf::Client.new('https://stf.default.svc.agoda.mobi', 'c8c62e3503d246b68d6683c47bc1414a80b9527185494c8ea811f874e9fdb7d2')).execute
