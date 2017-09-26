@@ -7,7 +7,7 @@ require 'stf/model/session'
 require 'pry'
 require 'stf/model/device'
 
-class ShowKeysInteractor
+class GetValuesInteractor
 
   include Log
   include ADB
@@ -16,19 +16,18 @@ class ShowKeysInteractor
     @stf = stf
   end
 
-  def execute
+  def execute(key)
     devices = @stf.get_devices
 
     if devices.nil? || (devices.is_a?(Array) && devices.empty?)
-      logger.info 'No devices connected to STF'
-      return
+      logger.info r 'No devices connected to STF'
+      return []
     end
 
-    puts devices
+    return devices
              .map {|d| Device.new(d)}
-             .flat_map {|d| d.getKeys }
+             .map {|d| d.getValue(key)}
              .uniq
-             .sort
   end
 
 end

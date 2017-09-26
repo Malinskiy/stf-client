@@ -7,8 +7,8 @@ module Stf
     require 'stf/interactor/stop_debug_session_interactor'
     require 'stf/interactor/stop_all_debug_sessions_interactor'
     require 'stf/interactor/remove_all_user_devices_interactor'
-    require 'stf/interactor/display_keys_interactor'
-    require 'stf/interactor/display_values_interactor'
+    require 'stf/interactor/get_keys_interactor'
+    require 'stf/interactor/get_values_interactor'
 
     include GLI::App
     extend self
@@ -18,13 +18,14 @@ module Stf
     desc 'Be verbose'
     switch [:v, :verbose]
 
-    desc 'Authorization token'
+    desc 'Authorization token, can also be set by environment variable STF_TOKEN'
     flag [:t, :token]
 
-    desc 'URL to STF'
+    desc 'URL to STF, can also be set by environment variable STF_URL'
     flag [:u, :url]
 
     pre do |global_options, command, options, args|
+
       global_options[:url] = ENV['STF_URL'] if global_options[:url].nil?
       global_options[:token] = ENV['STF_TOKEN'] if global_options[:token].nil?
 
@@ -50,7 +51,7 @@ module Stf
     desc 'Show avaliable keys for filtering'
     command :keys do |c|
       c.action do |global_options, options, args|
-        ShowKeysInteractor.new($stf).execute
+        puts GetKeysInteractor.new($stf).execute
       end
     end
 
@@ -62,7 +63,7 @@ module Stf
         if options[:key].nil?
           help_now!('Please specify the key (--key)')
         else
-          ShowValuesInteractor.new($stf).execute(options[:key])
+          puts GetValuesInteractor.new($stf).execute(options[:key])
         end
       end
     end
