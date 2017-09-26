@@ -4,7 +4,6 @@ require 'stf/client'
 require 'stf/log/log'
 require 'stf/errors'
 require 'stf/model/session'
-require 'pry'
 
 class StartDebugSessionInteractor
 
