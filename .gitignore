@@ -33,6 +33,12 @@
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
+# RubyMine
+.idea/.rakeTasks
+.idea/misc.xml
+.idea/modules.xml
+.idea/stf-client.iml
+
 ## File-based project format:
 *.iws
 

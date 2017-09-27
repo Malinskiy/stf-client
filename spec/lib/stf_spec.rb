@@ -9,33 +9,37 @@ describe Stf::Client do
   it 'should correctly get devices' do
     devices = @stf.get_devices
 
-    expect(devices).instance_of? Array
+    expect(devices).to be_instance_of Array
   end
 
   it 'should correctly get device by serial' do
     device = @stf.get_device 'UDKDU15A20001021'
 
-    expect(device.serial).eql? 'UDKDU15A20001021'
+    expect(device.serial).to eq 'UDKDU15A20001021'
   end
 
   it 'should correctly get user' do
     user = @stf.get_user
 
-    expect(user.email).eql? 'stf@openstf.io'
+    expect(user.email).to eq 'stf@openstf.io'
   end
 
   it 'should correctly get user device' do
     devices = @stf.get_user_devices
 
-    expect(devices).instance_of? Array
+    expect(devices).to be_instance_of Array
   end
 
   it 'should correctly add device' do
-    expect(@stf.add_device 'UDKDU15A20001021').to be true
+    result = @stf.add_device 'UDKDU15A20001021'
+
+    expect(result).to be true
   end
 
   it 'should correctly start debug session' do
-    expect(@stf.start_debug('UDKDU15A20001021').remoteConnectUrl).eql? 'openstf.io:7401'
+    url = @stf.start_debug('UDKDU15A20001021').remoteConnectUrl
+
+    expect(url).to eq 'openstf.io:7401'
   end
 
   it 'should correctly stop debug session' do

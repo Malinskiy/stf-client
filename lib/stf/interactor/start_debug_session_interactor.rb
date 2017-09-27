@@ -14,52 +14,83 @@ class StartDebugSessionInteractor
     @stf = stf
   end
 
-  def execute
-    randomized_device = nil
+  def execute(wanted, all_flag, filter)
+    wanted = 1 if wanted.nil?
+    wanted = wanted.to_i
 
     1..10.times do
-      begin
-        devices = @stf.get_devices
-        if devices.nil? || (devices.is_a?(Array) && devices.empty?)
-          logger.info 'No devices connected to STF. Retrying'
-          sleep 5
-          next
-        end
-        usable_devices = devices.select{ |d| d.ready == true && d.present == true && d.using == false }
-        if usable_devices.empty?
-          logger.error 'All devices are being used. Retrying'
-          sleep 5
-          next
-        end
+      wanted -= connect(wanted, all_flag, filter)
+      return if all_flag || wanted <= 0
+      logger.info 'We are still waiting for ' + wanted.to_s + ' device(s). Retrying'
+      sleep 5
+    end
+  end
 
-        randomized_device = usable_devices.sample
-        raise new DeviceNotAvailableError if randomized_device.nil?
+  def connect(wanted, all_flag, filter)
+    devices = @stf.get_devices
+    if devices.nil? || (devices.is_a?(Array) && devices.empty?)
+      logger.info 'No devices connected to STF'
+      return 0
+    end
 
-        serial  = randomized_device.serial
-        success = @stf.add_device serial
-        if success
-          logger.info "Device #{serial} added"
-        elsif logger.error "Can't add device #{serial}. Retrying"
-          next
-        end
+    usable_devices = devices
+                         .map {|d| Device.new(d)}
+                         .select do |d|
+      d.ready == true && d.present == true && d.using == false
+    end
 
-        result = @stf.start_debug serial
-        if !result.success
-          logger.error "Can't start debugging session for device #{serial}. Retrying"
-          @stf.remove_device serial
-          next
-        end
+    if usable_devices.empty?
+      logger.error 'All devices are being used'
+      return 0
+    end
 
-        execute_adb_with 30, "connect #{result.remoteConnectUrl}"
+    unless filter.nil?
+      key, value = filter.split(':', 2)
 
-        return Session.new(serial, result.remoteConnectUrl)
-        break
-
-        raise new DeviceNotAvailableError
-      rescue DeviceNotAvailableError, Net::HTTPFatalError
-        logger.error 'Failed to start debug session. Retrying...'
-        next
+      usable_devices = usable_devices.select do |d|
+        d.getValue(key) == value
       end
+    end
+
+    if usable_devices.empty?
+      logger.error 'There is no device with criteria ' + filter
+      return 0
+    end
+
+    n = 0
+    usable_devices.shuffle.each do |d|
+      n += 1 if connect_device(d)
+      break if !all_flag && n >= wanted
+    end
+
+    n
+  end
+
+  def connect_device(device)
+    begin
+      return false if device.nil?
+
+      serial = device.serial
+      success = @stf.add_device serial
+      if success
+        logger.info "Device #{serial} added"
+      elsif logger.error "Can't add device #{serial}"
+        return false
+      end
+
+      result = @stf.start_debug serial
+      unless result.success
+        logger.error "Can't start debugging session for device #{serial}"
+        @stf.remove_device serial
+        return false
+      end
+
+      execute_adb_with 30, "connect #{result.remoteConnectUrl}"
+      return true
+
+    rescue Net::HTTPFatalError
+      logger.error 'Failed to start debug session'
+      return false
     end
   end
 end
