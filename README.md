@@ -35,8 +35,8 @@ SYNOPSIS
 
 GLOBAL OPTIONS
     --help             - Show this message
-    -t, --token=arg    - Authorization token (default: none)
-    -u, --url=arg      - URL to STF (default: none)
+    -t, --token=arg    - Authorization token, can also be set by environment variable STF_TOKEN (default: none)
+    -u, --url=arg      - URL to STF, can also be set by environment variable STF_URL (default: none)
     -v, --[no-]verbose - Be verbose
 
 COMMANDS
@@ -44,6 +44,12 @@ COMMANDS
     connect    - Search for a device available in STF and attach it to local adb server
     disconnect - Disconnect device(s) from local adb server and remove device(s) from user devices in STF
     help       - Shows a list of commands or help for one command
+    keys       - Show avaliable keys for filtering
+    values     - Show known values for the filtering key
+    
+ENVIRONMENT VARIABLES
+    STF_TOKEN - Authorization token 
+    STF_URL   - URL to STF 
 ```
 
 ## Contributing

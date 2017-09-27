@@ -7,6 +7,8 @@ module Stf
     require 'stf/interactor/stop_debug_session_interactor'
     require 'stf/interactor/stop_all_debug_sessions_interactor'
     require 'stf/interactor/remove_all_user_devices_interactor'
+    require 'stf/interactor/get_keys_interactor'
+    require 'stf/interactor/get_values_interactor'
 
     include GLI::App
     extend self
@@ -16,13 +18,17 @@ module Stf
     desc 'Be verbose'
     switch [:v, :verbose]
 
-    desc 'Authorization token'
+    desc 'Authorization token, can also be set by environment variable STF_TOKEN'
     flag [:t, :token]
 
-    desc 'URL to STF'
+    desc 'URL to STF, can also be set by environment variable STF_URL'
     flag [:u, :url]
 
     pre do |global_options, command, options, args|
+
+      global_options[:url] = ENV['STF_URL'] if global_options[:url].nil?
+      global_options[:token] = ENV['STF_TOKEN'] if global_options[:token].nil?
+
       help_now!('STF url is required') if global_options[:url].nil?
       help_now!('Authorization token is required') if global_options[:token].nil?
 
@@ -33,8 +39,32 @@ module Stf
 
     desc 'Search for a device available in STF and attach it to local adb server'
     command :connect do |c|
+      c.switch [:all]
+      c.flag [:n, :number]
+      c.flag [:f, :filter]
+
       c.action do |global_options, options, args|
-        StartDebugSessionInteractor.new($stf).execute
+        StartDebugSessionInteractor.new($stf).execute(options[:number], options[:all], options[:filter])
+      end
+    end
+
+    desc 'Show avaliable keys for filtering'
+    command :keys do |c|
+      c.action do |global_options, options, args|
+        puts GetKeysInteractor.new($stf).execute
+      end
+    end
+
+    desc 'Show known values for the filtering key'
+    command :values do |c|
+      c.flag [:k, :key]
+
+      c.action do |global_options, options, args|
+        if options[:key].nil?
+          help_now!('Please specify the key (--key)')
+        else
+          puts GetValuesInteractor.new($stf).execute(options[:key])
+        end
       end
     end
 
@@ -49,7 +79,7 @@ module Stf
           StopAllDebugSessionsInteractor.new($stf).execute
         elsif !options[:device].nil? && options[:all] == false
           StopDebugSessionInteractor.new($stf).execute(options[:device])
-        elsif help_now!('Please specify disconnect mode (-all or -device)')
+        elsif help_now!('Please specify disconnect mode (--all or --device)')
         end
       end
     end
