@@ -50,6 +50,11 @@ COMMANDS
 ENVIRONMENT VARIABLES
     STF_TOKEN - Authorization token 
     STF_URL   - URL to STF 
+
+COMMAND OPTIONS
+    connect
+        -f          - Filter devices in the form of "key:value". Use stf-client keys to list keys and stf-client values -k <key from prev command> to get list of applicable values
+        -d, --adb   - Automatically execute adb connect command once device acquired. Default true
 ```
 
 ## Contributing
