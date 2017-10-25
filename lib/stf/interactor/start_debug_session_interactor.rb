@@ -66,7 +66,7 @@ class StartDebugSessionInteractor
     n
   end
 
-  def connect_device(device, auto_adb_connect = true)
+  def connect_device(device, auto_adb_connect)
     begin
       return false if device.nil?
 
@@ -85,10 +85,10 @@ class StartDebugSessionInteractor
         return false
       end
 
+      logger.info "remoteConnectUrl: #{result.remoteConnectUrl}" 
+
       if auto_adb_connect
         _execute_adb_with 30, "connect #{result.remoteConnectUrl}"
-      else
-        logger.info "remoteConnectUrl: #{result.remoteConnectUrl}"
       end
       return true
 

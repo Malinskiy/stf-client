@@ -42,7 +42,7 @@ module Stf
       c.switch [:all]
       c.flag [:n, :number]
       c.flag [:f, :filter]
-      c.switch [:d, :adb, default_value: true, desc: 'automatically execute adb connect']
+      c.switch :adb, default_value: true, desc: 'automatically execute adb connect'
 
       c.action do |global_options, options, args|
         StartDebugSessionInteractor.new($stf).execute(options[:number], options[:all], options[:filter], options[:adb])
