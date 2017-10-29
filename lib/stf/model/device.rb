@@ -7,6 +7,12 @@ class Device < OpenStruct
     getKeysNextLevel('', self)
   end
 
+  def checkFilter(filter)
+    return true if filter.nil?
+    key, value = filter.split(':', 2)
+    getValue(key) == value
+  end
+
   def getKeysNextLevel(prefix, o)
     return [] if o.nil?
 

@@ -4,93 +4,116 @@ require 'stf/client'
 require 'stf/log/log'
 require 'stf/errors'
 require 'stf/model/session'
+require 'stf/model/device_list'
 
 class StartDebugSessionInteractor
 
   include Log
   include ADB
 
-  def initialize(stf)
-    @stf = stf
-  end
+  def execute(opts = {})
+    all_flag = opts[:all]
+    forewer_flag = opts[:forewer]
+    nodaemon_flag = opts[:nodaemon]
+    filter = opts[:filter]
+    max_n = opts[:n].to_i > 0 ? opts[:n].to_i : 1
+    start_timeout = opts[:starttime].to_i > 0 ? opts[:starttime].to_i : 120
+    worktime = opts[:worktime].to_i > 0 ? opts[:worktime].to_i : 10800
+    min_n = opts[:min].to_s.empty? ? (max_n + 1) / 2 : opts[:min].to_i
 
-  def execute(wanted, all_flag, filter)
-    wanted = 1 if wanted.nil?
-    wanted = wanted.to_i
+    puts "min_n #{min_n} max_n #{max_n}"
 
-    1..10.times do
-      wanted -= connect(wanted, all_flag, filter)
-      return if all_flag || wanted <= 0
-      logger.info 'We are still waiting for ' + wanted.to_s + ' device(s). Retrying'
-      sleep 5
+    DI[:demonizer].kill unless opts[:nokill]
+
+    if filter
+      DI[:stop_all_debug_sessions_interactor].execute(exceptFilter: filter)
+    end
+
+    wanted = nodaemon_flag ? max_n : min_n
+
+    begin
+      connect_loop(all_flag, wanted, filter, false, 5, start_timeout)
+
+    rescue SignalException => e
+      DI[:stop_all_debug_sessions_interactor].execute
+      return false
+
+    rescue
+    end
+
+    connected_count = count_connected_devices(filter)
+    if all_flag ? connected_count.zero? : connected_count < wanted
+      DI[:stop_all_debug_sessions_interactor].execute
+      return false
+    end
+
+    logger.info "Lower quantity achieved, already connected #{connected_count}"
+
+    return if nodaemon_flag
+
+    # will be daemon here
+    DI[:demonizer].run do
+      connect_loop(all_flag,
+                   max_n,
+                   filter,
+                   true,
+                   30,
+                   worktime,
+                   forewer_flag)
+
+      DI[:stop_all_debug_sessions_interactor].execute(byFilter: filter, nokill: true)
     end
   end
 
-  def connect(wanted, all_flag, filter)
-    devices = @stf.get_devices
-    if devices.nil? || (devices.is_a?(Array) && devices.empty?)
-      logger.info 'No devices connected to STF'
-      return 0
-    end
+  def connect_loop(all_flag, wanted, filter, infinite_flag, delay, timeout, forever_flag=false)
+    finish_time = Time.now + timeout
 
-    usable_devices = devices
-                         .map {|d| Device.new(d)}
-                         .select do |d|
-      d.ready == true && d.present == true && d.using == false
-    end
+    while forever_flag || Time.now < finish_time do
+      stf_devices = DeviceList.new(DI[:stf].get_devices)
+      stf_devices = stf_devices.byFilter(filter) if filter
 
-    if usable_devices.empty?
-      logger.error 'All devices are being used'
-      return 0
-    end
-
-    unless filter.nil?
-      key, value = filter.split(':', 2)
-
-      usable_devices = usable_devices.select do |d|
-        d.getValue(key) == value
+      if all_flag
+        batch = stf_devices.filterReadyToConnect.size
+      else
+        connected = devices & stf_devices.asConnectUrlList
+        batch = wanted - connected.size
       end
+
+      if batch > 0
+        connect(filter, all_flag, batch)
+      elsif !infinite_flag
+        break
+      end
+
+      sleep delay
     end
 
-    if usable_devices.empty?
-      logger.error 'There is no device with criteria ' + filter
+  end
+
+  def count_connected_devices(filter)
+    stf_devices = DeviceList.new(DI[:stf].get_user_devices)
+    stf_devices = stf_devices.byFilter(filter) if filter
+    connected = devices & stf_devices.asConnectUrlList
+    connected.size
+  end
+
+  def connect(filter, all_flag, wanted)
+    devices = DeviceList.new(DI[:stf].get_devices)
+    devices = devices.filterReadyToConnect
+    devices = devices.byFilter(filter) if filter
+
+    if devices.empty?
+      logger.error 'There is no available devices with criteria ' + filter
       return 0
     end
 
     n = 0
-    usable_devices.shuffle.each do |d|
-      n += 1 if connect_device(d)
+    devices.asArray.shuffle.each do |d|
+      n += 1 if DI[:start_one_debug_session_interactor].execute(d)
       break if !all_flag && n >= wanted
     end
 
     n
   end
 
-  def connect_device(device)
-    begin
-      return false if device.nil?
-
-      serial = device.serial
-      success = @stf.add_device serial
-      if success
-        logger.info "Device #{serial} added"
-      elsif logger.error "Can't add device #{serial}"
-        return false
-      end
-
-      result = @stf.start_debug serial
-      unless result.success
-        logger.error "Can't start debugging session for device #{serial}"
-        @stf.remove_device serial
-        return false
-      end
-
-      execute_adb_with 30, "connect #{result.remoteConnectUrl}"
-      return true
-
-    rescue Net::HTTPFatalError
-      logger.error 'Failed to start debug session'
-      return false
-    end
-  end
 end

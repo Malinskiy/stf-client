@@ -1,11 +1,9 @@
+require 'di'
 class RemoveAllUserDevicesInteractor
+  def execute(opts = {})
+    DI[:demonizer].kill unless opts[:nokill]
 
-  def initialize(stf)
-    @stf = stf
-  end
-
-  def execute
-    devices = @stf.get_user_devices
-    devices.each { |d| @stf.remove_device d.serial }
+    devices = DI[:stf].get_user_devices
+    devices.each { |d| DI[:stf].remove_device d.serial }
   end
 end
