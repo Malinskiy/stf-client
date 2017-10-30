@@ -21,8 +21,6 @@ class StartDebugSessionInteractor
     worktime = opts[:worktime].to_i > 0 ? opts[:worktime].to_i : 10800
     min_n = opts[:min].to_s.empty? ? (max_n + 1) / 2 : opts[:min].to_i
 
-    puts "min_n #{min_n} max_n #{max_n}"
-
     DI[:demonizer].kill unless opts[:nokill]
 
     if filter
@@ -69,6 +67,8 @@ class StartDebugSessionInteractor
     finish_time = Time.now + timeout
 
     while forever_flag || Time.now < finish_time do
+      cleanup_disconnected_devices(filter)
+
       stf_devices = DeviceList.new(DI[:stf].get_devices)
       stf_devices = stf_devices.byFilter(filter) if filter
 
@@ -95,6 +95,17 @@ class StartDebugSessionInteractor
     stf_devices = stf_devices.byFilter(filter) if filter
     connected = devices & stf_devices.asConnectUrlList
     connected.size
+  end
+
+  def cleanup_disconnected_devices(filter)
+    stf_devices = DeviceList.new(DI[:stf].get_user_devices)
+    stf_devices = stf_devices.byFilter(filter) if filter
+    connected = stf_devices.asConnectUrlList - devices
+
+    connected.each do |url|
+      logger.info 'Cleanup the device ' + url
+      DI[:stop_debug_session_interactor].execute(url)
+    end
   end
 
   def connect(filter, all_flag, wanted)
