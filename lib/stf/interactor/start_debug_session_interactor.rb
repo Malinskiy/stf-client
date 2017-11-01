@@ -102,8 +102,8 @@ class StartDebugSessionInteractor
     stf_devices = stf_devices.byFilter(filter) if filter
     connected = stf_devices.asConnectUrlList - devices
 
-    connected.each do |url|
-      logger.info 'Cleanup the device ' + url
+    connected.reject { |url| url.to_s.empty? }.each do |url|
+      logger.info 'Cleanup the device ' + url.to_s
       DI[:stop_debug_session_interactor].execute(url)
     end
   end
