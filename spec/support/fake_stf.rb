@@ -31,6 +31,12 @@ class FakeSTF < Sinatra::Base
     json_response 200, 'user/POST_devices.json'
   end
 
+  post '/api/v1/user/adbPublicKeys' do
+    return 404 unless @env['HTTP_AUTHORIZATION'].eql? "Bearer #{FakeSTF.fake_token}"
+
+    json_response 200, 'user/POST_adbPublicKeys.json'
+  end
+
   post '/api/v1/user/devices/:serial/remoteConnect' do
     return 404 unless @env['HTTP_AUTHORIZATION'].eql? "Bearer #{FakeSTF.fake_token}"
 

@@ -36,6 +36,12 @@ describe Stf::Client do
     expect(result).to be true
   end
 
+  it 'should correctly add adb public key' do
+    result = @stf.add_adb_public_key 'UDKDU15A20001021 foo@foo.foo'
+
+    expect(result).to be true
+  end
+
   it 'should correctly start debug session' do
     url = @stf.start_debug('UDKDU15A20001021').remoteConnectUrl
 

@@ -40,8 +40,8 @@ module Stf
       response.success
     end
 
-    def add_adb_public_key(id_pub)
-      response = execute '/api/v1/user/adbPublicKeys', Net::HTTP::Post, { adb: { publickey: id_pub } }.to_json
+    def add_adb_public_key(adbkeypub)
+      response = execute '/api/v1/user/adbPublicKeys', Net::HTTP::Post, { publickey: adbkeypub }.to_json
       response.success
     end
 
@@ -71,6 +71,7 @@ module Stf
 
       uri          = URI.parse(url)
       http         = Net::HTTP.new(uri.host, uri.port)
+      http.set_debug_output(logger)
       http.use_ssl = true if uri.scheme == 'https'
       request      = type.new(uri, 'Authorization' => "Bearer #{@token}", 'Content-Type' => 'application/json')
       request.body = body

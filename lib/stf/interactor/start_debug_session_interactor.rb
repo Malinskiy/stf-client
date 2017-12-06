@@ -6,7 +6,6 @@ require 'stf/errors'
 require 'stf/model/session'
 
 class StartDebugSessionInteractor
-
   include Log
   include ADB
 
@@ -34,8 +33,8 @@ class StartDebugSessionInteractor
     end
 
     usable_devices = devices
-                         .map {|d| Device.new(d)}
-                         .select do |d|
+                     .map { |d| Device.new(d) }
+                     .select do |d|
       d.ready == true && d.present == true && d.using == false
     end
 
@@ -67,30 +66,28 @@ class StartDebugSessionInteractor
   end
 
   def connect_device(device)
-    begin
-      return false if device.nil?
+    return false if device.nil?
 
-      serial = device.serial
-      success = @stf.add_device serial
-      if success
-        logger.info "Device #{serial} added"
-      elsif logger.error "Can't add device #{serial}"
-        return false
-      end
-
-      result = @stf.start_debug serial
-      unless result.success
-        logger.error "Can't start debugging session for device #{serial}"
-        @stf.remove_device serial
-        return false
-      end
-
-      execute_adb_with 30, "connect #{result.remoteConnectUrl}"
-      return true
-
-    rescue Net::HTTPFatalError
-      logger.error 'Failed to start debug session'
+    serial = device.serial
+    success = @stf.add_device serial
+    if success
+      logger.info "Device #{serial} added"
+    elsif logger.error "Can't add device #{serial}"
       return false
     end
+
+    result = @stf.start_debug serial
+    unless result.success
+      logger.error "Can't start debugging session for device #{serial}"
+      @stf.remove_device serial
+      return false
+    end
+
+    execute_adb_with 30, "connect #{result.remoteConnectUrl}"
+    return true
+
+  rescue Net::HTTPFatalError
+    logger.error 'Failed to start debug session'
+    return false
   end
 end
