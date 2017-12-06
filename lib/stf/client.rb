@@ -71,7 +71,6 @@ module Stf
 
       uri          = URI.parse(url)
       http         = Net::HTTP.new(uri.host, uri.port)
-      http.set_debug_output(logger)
       http.use_ssl = true if uri.scheme == 'https'
       request      = type.new(uri, 'Authorization' => "Bearer #{@token}", 'Content-Type' => 'application/json')
       request.body = body
