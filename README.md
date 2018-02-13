@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Malinskiy/stf-client.svg?branch=master)](https://travis-ci.org/Malinskiy/stf-client)
+[![Gem](https://img.shields.io/gem/v/stf-client.svg)]()
+[![Gem](https://img.shields.io/gem/dt/stf-client.svg)]()
+
 # Stf::Client
 
 Automation client for connecting to [OpenSTF](https://github.com/openstf/stf) devices.
