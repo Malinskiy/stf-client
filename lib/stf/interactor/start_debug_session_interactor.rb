@@ -13,12 +13,12 @@ class StartDebugSessionInteractor
 
   def execute(opts = {})
     all_flag = opts[:all]
-    forewer_flag = opts[:forewer]
+    forever_flag = opts[:forever]
     nodaemon_flag = opts[:nodaemon]
     filter = opts[:filter]
     max_n = opts[:n].to_i > 0 ? opts[:n].to_i : 1
     start_timeout = opts[:starttime].to_i > 0 ? opts[:starttime].to_i : 120
-    worktime = opts[:worktime].to_i > 0 ? opts[:worktime].to_i : 10800
+    session = opts[:worktime].to_i > 0 ? opts[:session].to_i : 10800
     min_n = opts[:min].to_s.empty? ? (max_n + 1) / 2 : opts[:min].to_i
 
     DI[:demonizer].kill unless opts[:nokill]
@@ -56,8 +56,8 @@ class StartDebugSessionInteractor
                    filter,
                    true,
                    30,
-                   worktime,
-                   forewer_flag)
+                   session,
+                   forever_flag)
 
       DI[:stop_all_debug_sessions_interactor].execute(byFilter: filter, nokill: true)
     end

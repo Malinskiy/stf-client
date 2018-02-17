@@ -7,23 +7,25 @@ require 'stf/errors'
 require 'stf/model/session'
 require 'stf/model/device'
 
-class GetValuesInteractor
+module Stf
+  class GetValuesInteractor
 
-  include Log
-  include ADB
+    include Log
+    include ADB
 
-  def execute(key)
-    devices = DI[:stf].get_devices
+    def execute(key)
+      devices = DI[:stf].get_devices
 
-    if devices.nil? || (devices.is_a?(Array) && devices.empty?)
-      logger.info r 'No devices connected to STF'
-      return []
+      if devices.nil? || (devices.is_a?(Array) && devices.empty?)
+        logger.info r 'No devices connected to STF'
+        return []
+      end
+
+      devices
+          .map {|d| Device.new(d)}
+          .map {|d| d.getValue(key)}
+          .uniq
     end
 
-    devices
-        .map {|d| Device.new(d)}
-        .map {|d| d.getValue(key)}
-        .uniq
   end
-
 end

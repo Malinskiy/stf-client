@@ -47,12 +47,12 @@ module Stf
       c.flag [:min]
       c.desc 'Filter key:value for devices'
       c.flag [:f, :filter]
-      c.desc 'Request devices for this time in seconds, 10800 (3h) by default'
-      c.flag [:worktime]
-      c.desc 'Time to connect min devices, 120 (2m) by default'
+      c.desc 'Maximum session duration in seconds, 10800 (3h) by default'
+      c.flag [:session]
+      c.desc 'Maximum time to connect minimal quantity of devices in seconds, 120 (2m) by default'
       c.flag [:starttime]
       c.desc 'Maintain connactions before explicitly kill'
-      c.switch [:forewer]
+      c.switch [:forever]
       c.desc 'Do not start daemon'
       c.switch [:nodaemon]
 

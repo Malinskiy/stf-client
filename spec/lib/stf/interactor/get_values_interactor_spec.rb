@@ -1,11 +1,10 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 require 'stf/interactor/get_values_interactor'
 
-describe Stf::Client do
+describe Stf::GetValuesInteractor do
 
   before :each do
-    @stf = Stf::Client.new('http://openstf.io', FakeSTF.fake_token)
-    @interacror = GetValuesInteractor.new(@stf)
+    @interacror = Stf::GetValuesInteractor.new
   end
 
   it 'should correctly return values by simple key' do
