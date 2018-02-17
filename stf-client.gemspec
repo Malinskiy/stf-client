@@ -15,12 +15,19 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.executables   = ['stf-client']
 
-  spec.add_runtime_dependency 'gli'
-  spec.add_runtime_dependency 'ADB'
+  spec.add_runtime_dependency 'gli', '~> 2.17'
+  spec.add_runtime_dependency 'ADB', '~> 0.5'
+  spec.add_runtime_dependency 'dante', '~> 0.2.0'
+  spec.add_runtime_dependency 'dry-container', '~> 0.6.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.12'
+  # spec.add_runtime_dependency 'pry', '~> 0.10.4'
+
+  spec.add_development_dependency 'bundler', '~> 1.16.a'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
+  spec.add_development_dependency 'rspec_junit_formatter', '~> 0.2'
   spec.add_development_dependency 'webmock', '~> 2.1'
   spec.add_development_dependency 'sinatra', '~> 1.4'
+  spec.add_development_dependency 'simplecov', '~> 0.14'
+  spec.add_development_dependency 'simplecov-json', '~> 0.2'
 end

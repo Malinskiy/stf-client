@@ -1,4 +1,5 @@
 require 'ADB'
+require 'di'
 
 require 'stf/client'
 require 'stf/log/log'
@@ -6,28 +7,24 @@ require 'stf/errors'
 require 'stf/model/session'
 require 'stf/model/device'
 
-class GetKeysInteractor
+module Stf
+  class GetKeysInteractor
+    include Log
+    include ADB
 
-  include Log
-  include ADB
+    def execute
+      devices = DI[:stf].get_devices
 
-  def initialize(stf)
-    @stf = stf
-  end
+      if devices.nil? || (devices.is_a?(Array) && devices.empty?)
+        logger.info 'No devices connected to STF'
+        return []
+      end
 
-  def execute
-    devices = @stf.get_devices
-
-    if devices.nil? || (devices.is_a?(Array) && devices.empty?)
-      logger.info 'No devices connected to STF'
-      return []
+      devices
+          .map {|d| Device.new(d)}
+          .flat_map {|d| d.getKeys}
+          .uniq
+          .sort
     end
-
-    return devices
-             .map {|d| Device.new(d)}
-             .flat_map {|d| d.getKeys }
-             .uniq
-             .sort
   end
-
 end

@@ -1,10 +1,12 @@
-class Session
+module Stf
+  class Session
 
-  attr_accessor :serial, :url
+    attr_accessor :serial, :url
 
-  def initialize(serial, url)
-    @serial = serial
-    @url    = url
+    def initialize(serial, url)
+      @serial = serial
+      @url = url
+    end
+
   end
-
 end

@@ -1,9 +1,9 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Stf::Client do
 
   before :each do
-    @stf = Stf::Client.new('http://openstf.io', FakeSTF.fake_token)
+    @stf = DI[:stf]
   end
 
   it 'should correctly get devices' do
@@ -48,6 +48,22 @@ describe Stf::Client do
 
   it 'should correcly remove device' do
     expect(@stf.remove_device('UDKDU15A20001021')).to be true
+  end
+
+  it 'should correctly show device parameters' do
+    list = @stf.get_devices
+    devices = list.map {|d| Stf::Device.new(d)}
+
+    key = 'provider.name'
+    value = '19c4bdfb8812'
+    expected = list.select {|d| d.provider.name == value }.length
+    expect(expected).to be > 0
+
+    actual = devices.select do |d|
+      d.getValue(key) == value
+    end
+
+    expect(actual.length).to eq expected
   end
 
 end
