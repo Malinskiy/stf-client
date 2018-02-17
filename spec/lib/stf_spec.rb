@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Stf::Client do
 
@@ -52,7 +52,7 @@ describe Stf::Client do
 
   it 'should correctly show device parameters' do
     list = @stf.get_devices
-    devices = list.map {|d| Device.new(d)}
+    devices = list.map {|d| Stf::Device.new(d)}
 
     key = 'provider.name'
     value = '19c4bdfb8812'
