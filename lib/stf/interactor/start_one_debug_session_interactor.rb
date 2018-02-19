@@ -34,6 +34,7 @@ module Stf
         end
 
         execute_adb_with 30, "connect #{result.remoteConnectUrl}"
+        sleep 1
 
         # Check for adb device status
         execute_adb_with(30, 'devices')
