@@ -82,6 +82,6 @@
     "status": 3,
     "statusChangedAt": "2016-07-22T10:45:53.834Z",
     "version": "5.1",
-    "using": false
+    "usage": null
   }
 }

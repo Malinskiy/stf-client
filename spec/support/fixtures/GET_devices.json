@@ -83,7 +83,7 @@
       "status": 3,
       "statusChangedAt": "2016-07-22T10:45:53.834Z",
       "version": "5.1",
-      "using": false
+      "usage": null
     },
     {
       "abi": "armeabi-v7a",
@@ -183,7 +183,7 @@
         "ram": 3072,
         "rom": 16384
       },
-      "using": false
+      "usage": null
     },
     {
       "abi": "armeabi-v7a",
@@ -257,7 +257,7 @@
       "status": 3,
       "statusChangedAt": "2016-07-20T12:05:37.341Z",
       "version": "4.2.2",
-      "using": true
+      "usage": "automation"
     },
     {
       "abi": "arm64-v8a",
@@ -341,7 +341,7 @@
       "status": 3,
       "statusChangedAt": "2016-07-22T10:45:53.837Z",
       "version": "6.0.1",
-      "using": false
+      "usage": null
     },
     {
       "abi": "armeabi-v7a",
@@ -417,7 +417,7 @@
       "status": 3,
       "statusChangedAt": "2016-07-26T08:01:36.872Z",
       "version": "5.1.1",
-      "using": false
+      "usage": null
     }
   ]
 }
