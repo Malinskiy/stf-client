@@ -49,6 +49,8 @@ module Stf
 
         return true
 
+      rescue SignalException => e
+        raise e
       rescue => e
         begin
           # we will try clean anyway
@@ -56,7 +58,7 @@ module Stf
         rescue
         end
 
-        logger.error "Failed to connect to #{serial}"
+        logger.error "Failed to connect to #{serial}: " + e.message
         return false
       end
     end

@@ -46,12 +46,12 @@ module Stf
     end
 
     def start_debug(serial)
-      response = execute "/api/v1//user/devices/#{serial}/remoteConnect", Net::HTTP::Post
+      response = execute "/api/v1/user/devices/#{serial}/remoteConnect", Net::HTTP::Post
       return response
     end
 
     def stop_debug(serial)
-      response = execute "/api/v1//user/devices/#{serial}/remoteConnect", Net::HTTP::Delete
+      response = execute "/api/v1/user/devices/#{serial}/remoteConnect", Net::HTTP::Delete
       return response.success
     end
 
