@@ -35,20 +35,12 @@ module Stf
 
         execute_adb_with 30, "connect #{result.remoteConnectUrl}"
 
-        # Check for adb device status
-        execute_adb_with(30, 'devices')
-        device_list = last_stdout.split("\n")
-        device_list.shift
-        devices = Hash[device_list.collect {|device| [device.split("\t").first, device.split("\t").last]}]
-
-        if devices["#{result.remoteConnectUrl}"] != "device"
-          raise "adb connect #{result.remoteConnectUrl} succeeded but device is not in the adb devices list"
-        end
-
         shell('exit', {serial: "#{result.remoteConnectUrl}"}, 30)
 
         return true
 
+      rescue SignalException => e
+        raise e
       rescue => e
         begin
           # we will try clean anyway
@@ -56,7 +48,7 @@ module Stf
         rescue
         end
 
-        logger.error "Failed to connect to #{serial}"
+        logger.error "Failed to connect to #{serial}: " + e.message
         return false
       end
     end
