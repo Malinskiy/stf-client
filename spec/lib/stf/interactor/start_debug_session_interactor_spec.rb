@@ -11,9 +11,9 @@ describe Stf::StartDebugSessionInteractor do
     DI.container.stub(:demonizer, demonizer)
 
     allow_any_instance_of(ADB).to receive(:execute_adb_with).with(30, 'devices')
-    allow_any_instance_of(ADB).to receive(:execute_adb_with).with(30, '-s openstf.io:7401 wait-for-device shell exit')
+    allow_any_instance_of(ADB).to receive(:execute_adb_with).with(30, '-s openstf.io:7401 wait-for-device shell echo adbtest')
     allow_any_instance_of(ADB).to receive(:execute_adb_with).with(30, 'connect openstf.io:7401').and_return(true)
-    allow_any_instance_of(ADB).to receive(:last_stdout).and_return("\nopenstf.io:7401\tdevice")
+    allow_any_instance_of(ADB).to receive(:last_stdout).and_return("\nadbtestopenstf.io:7401\tdevice")
     allow_any_instance_of(ADB).to receive(:devices).and_return(['openstf.io:7405'])
   end
 

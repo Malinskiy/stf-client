@@ -35,7 +35,8 @@ module Stf
 
         execute_adb_with 30, "connect #{result.remoteConnectUrl}"
 
-        shell('exit', {serial: "#{result.remoteConnectUrl}"}, 30)
+        shell('echo adbtest', {serial: "#{result.remoteConnectUrl}"}, 30)
+        raise ADBError, "Could not execute shell test" unless stdout_contains "adbtest"
 
         return true
 
