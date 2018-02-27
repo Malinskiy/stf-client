@@ -32,20 +32,17 @@ module Stf
 
       begin
         connect_loop(all_flag, wanted, filter, false, 5, start_timeout)
-
       rescue SignalException => e
+        logger.info "Caught signal #{e}"
         DI[:stop_all_debug_sessions_interactor].execute
         return false
-
       rescue
+        logger.info "Exception #{e} during initial connect loop"
+        DI[:stop_all_debug_sessions_interactor].execute
+        return false
       end
 
       connected_count = count_connected_devices(filter)
-      if all_flag ? connected_count.zero? : connected_count < wanted
-        DI[:stop_all_debug_sessions_interactor].execute
-        return false
-      end
-
       logger.info "Lower quantity achieved, already connected #{connected_count}"
 
       return true if nodaemon_flag
@@ -69,7 +66,7 @@ module Stf
     def connect_loop(all_flag, wanted, filter, infinite_flag, delay, timeout, forever_flag = false)
       finish_time = Time.now + timeout
 
-      while forever_flag || Time.now < finish_time do
+      while true do
         cleanup_disconnected_devices(filter)
 
         stf_devices = DeviceList.new(DI[:stf].get_devices)
@@ -90,6 +87,10 @@ module Stf
         end
 
         sleep delay
+
+        if !forever_flag || Time.now > finish_time
+          raise "Connect loop timeout reached"
+        end
       end
 
     end
