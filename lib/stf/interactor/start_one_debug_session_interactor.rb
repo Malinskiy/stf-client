@@ -48,7 +48,7 @@ module Stf
           DI[:stf].remove_device serial
           if test ?d, '/custom-metrics'
             File.open('/custom-metrics/openstf_connect_fail', 'a') do
-                |f| f.write("openstf_connect_fail #{serial} #{Time.now.to_i}")
+                |f| f.write("openstf_connect_fail #{serial} #{Time.now.to_i}\n")
             end
           end
         rescue
