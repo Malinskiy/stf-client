@@ -48,7 +48,7 @@ module Stf
           DI[:stf].remove_device serial
           if test ?d, '/custom-metrics'
             File.open('/custom-metrics/openstf_connect_fail', 'a') do
-                |f| f.write("openstf_connect_fail,reason=\"#{e.message}\" serial=\"#{serial}\" #{Time.now.to_i}\n")
+                |f| f.write("openstf_connect_fail,reason=\"#{escape(e.message)}\" serial=\"#{serial}\" #{Time.now.to_i}\n")
             end
           end
         rescue
@@ -57,6 +57,10 @@ module Stf
         logger.error "Failed to connect to #{serial}: " + e.message
         return false
       end
+    end
+
+    def escape(s)
+      s.gsub(/["]/, '\"')
     end
   end
 end
