@@ -47,7 +47,7 @@ module Stf
           if test ?d, '/custom-metrics'
             File.open('/custom-metrics/openstf_connect_fail', 'a') do |f|
               message = (!e.nil? || !e.message.nil?) ? e.message : ""
-              f.write("openstf_connect_fail,reason=\"#{escape(message)}\" serial=\"#{serial}\" #{Time.now.to_i}\n")
+              f.write("openstf_connect_fail,reason=\"#{escape(message)}\",serial=\"#{escape(serial)}\" count=1i #{Time.now.to_i}\n")
             end
           end
         rescue
