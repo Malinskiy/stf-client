@@ -73,10 +73,11 @@ module Stf
         end
 
         stf_devices = DeviceList.new(DI[:stf].get_devices)
+        stf_devices = stf_devices.filterReadyToConnect
         stf_devices = stf_devices.byFilter(filter) if filter
 
         if all_flag
-          to_connect = stf_devices.filterReadyToConnect.size
+          to_connect = stf_devices.size
         else
           connected = devices & stf_devices.asConnectUrlList
           to_connect = wanted - connected.size
