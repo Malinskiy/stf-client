@@ -72,14 +72,14 @@ module Stf
           raise "Connect loop timeout reached"
         end
 
-        stf_devices = DeviceList.new(DI[:stf].get_devices)
-        stf_devices = stf_devices.filterReadyToConnect
+        all_devices = DeviceList.new(DI[:stf].get_devices)
+        stf_devices = all_devices.filterReadyToConnect
         stf_devices = stf_devices.byFilter(filter) if filter
 
         if all_flag
           to_connect = stf_devices.size
         else
-          connected = devices & stf_devices.asConnectUrlList
+          connected = devices & all_devices.asConnectUrlList
           to_connect = wanted - connected.size
         end
 
