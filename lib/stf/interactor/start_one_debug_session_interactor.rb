@@ -40,9 +40,7 @@ module Stf
 
         return true
 
-      rescue SignalException => e
-        raise e
-      rescue => e
+      rescue StandardError, SignalException => e
         begin
           # we will try clean anyway
           DI[:stf].remove_device serial
