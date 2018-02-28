@@ -20,7 +20,7 @@ module Stf
     end
 
     def filterReadyToConnect
-      select {|d| d.ready == true && d.present == true && d.using == false }
+      select {|d| d.ready == true && d.present == true && d.usage.nil? }
     end
 
     def asConnectUrlList
