@@ -410,7 +410,7 @@
       },
       "ready": true,
       "remoteConnect": false,
-      "remoteConnectUrl": null,
+      "remoteConnectUrl": "openstf.io:7405",
       "reverseForwards": [],
       "sdk": "22",
       "serial": "BH905JCE1E",

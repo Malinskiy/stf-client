@@ -14,7 +14,6 @@ module Stf
 
     def execute(opts = {})
       all_flag = opts[:all]
-      forever_flag = opts[:forever]
       nodaemon_flag = opts[:nodaemon]
       filter = opts[:filter]
       max_n = opts[:n].to_i > 0 ? opts[:n].to_i : 1
@@ -33,11 +32,11 @@ module Stf
       begin
         connect_loop(all_flag, wanted, filter, false, 5, start_timeout)
       rescue SignalException => e
-        logger.info "Caught signal #{e}"
+        logger.info "Caught signal #{e.message}"
         DI[:stop_all_debug_sessions_interactor].execute
         return false
       rescue
-        logger.info "Exception #{e} during initial connect loop"
+        logger.info "Exception #{e.message} during initial connect loop"
         DI[:stop_all_debug_sessions_interactor].execute
         return false
       end
@@ -54,8 +53,7 @@ module Stf
                      filter,
                      true,
                      30,
-                     session,
-                     forever_flag)
+                     session)
 
         DI[:stop_all_debug_sessions_interactor].execute(byFilter: filter, nokill: true)
       end
@@ -63,36 +61,41 @@ module Stf
       return true
     end
 
-    def connect_loop(all_flag, wanted, filter, infinite_flag, delay, timeout, forever_flag = false)
+    def connect_loop(all_flag, wanted, filter, daemon_mode, delay, timeout)
       finish_time = Time.now + timeout
+      one_time_mode = !daemon_mode
 
       while true do
         cleanup_disconnected_devices(filter)
+
+        if one_time_mode && Time.now > finish_time
+          raise "Connect loop timeout reached"
+        end
 
         stf_devices = DeviceList.new(DI[:stf].get_devices)
         stf_devices = stf_devices.byFilter(filter) if filter
 
         if all_flag
-          batch = stf_devices.filterReadyToConnect.size
+          to_connect = stf_devices.filterReadyToConnect.size
         else
           connected = devices & stf_devices.asConnectUrlList
-          batch = wanted - connected.size
+          to_connect = wanted - connected.size
         end
 
-        if batch > 0
-          n = connect(filter, all_flag, batch)
-          break if n == batch && !infinite_flag
-        elsif !infinite_flag
-          break
+        return if one_time_mode && to_connect == 0
+
+        if to_connect > 0
+          if stf_devices.empty?
+            logger.error 'There is no available devices with criteria ' + filter
+          else
+            random_device = stf_devices.asArray.sample
+            DI[:start_one_debug_session_interactor].execute(random_device)
+            next
+          end
         end
 
         sleep delay
-
-        if !forever_flag || Time.now > finish_time
-          raise "Connect loop timeout reached"
-        end
       end
-
     end
 
     def count_connected_devices(filter)

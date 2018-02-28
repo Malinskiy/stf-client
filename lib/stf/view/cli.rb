@@ -51,8 +51,6 @@ module Stf
       c.flag [:session]
       c.desc 'Maximum time to connect minimal quantity of devices in seconds, 120 (2m) by default'
       c.flag [:starttime]
-      c.desc 'Maintain connactions before explicitly kill'
-      c.switch [:forever]
       c.desc 'Do not start daemon'
       c.switch [:nodaemon]
 
