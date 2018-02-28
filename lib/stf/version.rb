@@ -1,3 +1,3 @@
 module Stf
-  VERSION = '0.3.0.rc4'
+  VERSION = '0.3.0.rc5'
 end

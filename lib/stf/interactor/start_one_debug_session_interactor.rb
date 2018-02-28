@@ -47,8 +47,9 @@ module Stf
           # we will try clean anyway
           DI[:stf].remove_device serial
           if test ?d, '/custom-metrics'
-            File.open('/custom-metrics/openstf_connect_fail', 'a') do
-                |f| f.write("openstf_connect_fail,reason=\"#{escape(e.message)}\" serial=\"#{serial}\" #{Time.now.to_i}\n")
+            File.open('/custom-metrics/openstf_connect_fail', 'a') do |f|
+              message = (!e.nil? && !e.message.nil?) ? e.message : ""
+              f.write("openstf_connect_fail,reason=\"#{escape(message)}\" serial=\"#{serial}\" #{Time.now.to_i}\n")
             end
           end
         rescue
@@ -60,7 +61,7 @@ module Stf
     end
 
     def escape(s)
-      s.gsub(/["]/, '\"')
+      s.gsub(/["]/, '\"').gsub(/[ ]/, '\ ').gsub(/[=]/, '\=').gsub(/[,]/, '\,')
     end
   end
 end
