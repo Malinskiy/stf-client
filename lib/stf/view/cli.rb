@@ -61,7 +61,7 @@ module Stf
       end
     end
 
-    desc 'Show avaliable keys for filtering'
+    desc 'Show available keys for filtering'
     command :keys do |c|
       c.action {puts DI[:get_keys_interactor].execute}
     end
