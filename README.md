@@ -48,7 +48,7 @@ COMMANDS
     connect    - Search for a device available in STF and attach it to local adb server
     disconnect - Disconnect device(s) from local adb server and remove device(s) from user devices in STF
     help       - Shows a list of commands or help for one command
-    keys       - Show avaliable keys for filtering
+    keys       - Show available keys for filtering
     values     - Show known values for the filtering key
     
 ENVIRONMENT VARIABLES
