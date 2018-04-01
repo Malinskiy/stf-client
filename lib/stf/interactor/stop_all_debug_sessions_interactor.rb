@@ -3,7 +3,6 @@ require 'ADB'
 
 require 'stf/client'
 require 'stf/log/log'
-require 'stf/errors'
 require 'stf/interactor/stop_debug_session_interactor'
 require 'stf/model/device_list'
 

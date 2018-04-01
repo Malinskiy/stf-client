@@ -4,7 +4,6 @@ require 'ostruct'
 
 require 'stf/version'
 require 'stf/log/log'
-require 'stf/errors'
 
 module Stf
   class Client

@@ -2,8 +2,6 @@ require 'ADB'
 
 require 'stf/client'
 require 'stf/log/log'
-require 'stf/errors'
-require 'stf/model/session'
 require 'stf/model/device_list'
 
 module Stf
@@ -116,25 +114,5 @@ module Stf
         DI[:stop_debug_session_interactor].execute(url)
       end
     end
-
-    def connect(filter, all_flag, wanted)
-      devices = DeviceList.new(DI[:stf].get_devices)
-      devices = devices.filterReadyToConnect
-      devices = devices.byFilter(filter) if filter
-
-      if devices.empty?
-        logger.error 'There is no available devices with criteria ' + filter
-        return 0
-      end
-
-      n = 0
-      devices.asArray.shuffle.each do |d|
-        n += 1 if DI[:start_one_debug_session_interactor].execute(d)
-        break if !all_flag && n >= wanted
-      end
-
-      n
-    end
-
   end
 end

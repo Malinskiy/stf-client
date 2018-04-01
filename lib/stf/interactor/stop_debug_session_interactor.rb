@@ -3,7 +3,6 @@ require 'ADB'
 
 require 'stf/client'
 require 'stf/log/log'
-require 'stf/errors'
 
 module Stf
   class StopDebugSessionInteractor

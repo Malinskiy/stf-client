@@ -32,7 +32,6 @@ module Stf
     end
 
     def reject
-      # DeviceList.new(@devices.reject {|d| yield(d)})
       DeviceList.new(@devices.select {|d| !yield(d)})
     end
 

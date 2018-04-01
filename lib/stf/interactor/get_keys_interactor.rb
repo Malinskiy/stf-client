@@ -3,8 +3,6 @@ require 'di'
 
 require 'stf/client'
 require 'stf/log/log'
-require 'stf/errors'
-require 'stf/model/session'
 require 'stf/model/device'
 
 module Stf
