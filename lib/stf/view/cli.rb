@@ -35,6 +35,9 @@ module Stf
       Log::verbose(global_options[:verbose])
 
       DI.init(global_options)
+
+      help_now!('Valid STF url is required, e.g. http(s)://openstf.local') if !DI[:uri_validator].validate(global_options[:url])
+      true
     end
 
     desc 'Search for a device available in STF and attach it to local adb server'

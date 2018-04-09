@@ -30,11 +30,11 @@ module Stf
       begin
         connect_loop(all_flag, wanted, filter, false, 5, start_timeout)
       rescue SignalException => e
-        logger.info "Caught signal #{e.message}"
+        logger.info "Caught signal \"#{e.message}\""
         DI[:stop_all_debug_sessions_interactor].execute
         return false
-      rescue
-        logger.info "Exception #{e.message} during initial connect loop"
+      rescue Exception => e
+        logger.info "Exception \"#{e.message}\" during initial connect loop"
         DI[:stop_all_debug_sessions_interactor].execute
         return false
       end

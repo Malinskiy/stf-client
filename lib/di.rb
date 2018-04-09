@@ -9,6 +9,7 @@ require 'stf/interactor/stop_all_debug_sessions_interactor'
 require 'stf/interactor/remove_all_user_devices_interactor'
 require 'stf/interactor/get_keys_interactor'
 require 'stf/interactor/get_values_interactor'
+require 'stf/validate/uri_validator'
 
 class DI
   class << self
@@ -60,6 +61,9 @@ class DI
                  -> {Stf::RemoveAllUserDevicesInteractor.new},
                  memoize: true)
 
+      c.register(:uri_validator,
+                 -> {Stf::URIValidator.new},
+                 memoize: true)
     end
 
     def [](what)
