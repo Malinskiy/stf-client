@@ -20,7 +20,15 @@ module Stf
     end
 
     def filterReadyToConnect
-      select {|d| d.ready == true && d.present == true && d.usage.nil? }
+      # https://github.com/openstf/stf/blob/93d9d7fe859bb7ca71669f375d841d94fa47d751/lib/wire/wire.proto#L170
+      # enum DeviceStatus {
+      #   OFFLINE = 1;
+      #   UNAUTHORIZED = 2;
+      #   ONLINE = 3;
+      #   CONNECTING = 4;
+      #   AUTHORIZING = 5;
+      # }
+      select {|d| d.ready == true && d.present == true && d.usage.nil? && d.status == 3 }
     end
 
     def asConnectUrlList
