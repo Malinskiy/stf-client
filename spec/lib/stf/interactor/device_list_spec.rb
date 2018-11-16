@@ -28,4 +28,29 @@ describe Stf::DeviceList do
     device_list = Stf::DeviceList.new(DI[:stf].get_devices())
     expect(device_list.reject {|d| d.present == true}.size).to eq 1
   end
+
+  it 'shold get one device by serial' do
+    device_list = Stf::DeviceList.new(DI[:stf].get_devices())
+    expect(device_list.byFilter('serial:022GPLDU39036997').size).to eq 1
+  end
+
+  it 'should return 3 devices connected by WiFi' do
+    device_list = Stf::DeviceList.new(DI[:stf].get_devices())
+    expect(device_list.healthy('wifi').size).to eq 3
+  end
+
+  it 'should return 1 device connected by VPN' do
+    device_list = Stf::DeviceList.new(DI[:stf].get_devices())
+    expect(device_list.healthy('vpn').size).to eq 1
+  end
+
+  it 'should return 4 devices connected to network' do
+    device_list = Stf::DeviceList.new(DI[:stf].get_devices())
+    expect(device_list.healthy('net').size).to eq 4
+  end
+
+  it 'should return 4 devices healthy to connect' do
+    device_list = Stf::DeviceList.new(DI[:stf].get_devices())
+    expect(device_list.healthyForConnect('battery,temperature,network').size).to eq 2
+  end
 end

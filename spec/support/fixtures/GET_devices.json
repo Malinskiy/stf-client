@@ -90,7 +90,7 @@
       "airplaneMode": false,
       "battery": {
         "health": "good",
-        "level": 100,
+        "level": 15,
         "scale": 100,
         "source": "usb",
         "status": "full",
@@ -144,7 +144,7 @@
         "roaming": false,
         "state": "out_of_service",
         "subtype": "",
-        "type": "WIFI"
+        "type": "VPN"
       },
       "operator": null,
       "owner": null,
@@ -268,7 +268,7 @@
         "scale": 100,
         "source": "usb",
         "status": "full",
-        "temp": 25.3,
+        "temp": 33,
         "voltage": 4.341
       },
       "browser": {

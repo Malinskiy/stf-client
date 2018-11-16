@@ -12,11 +12,24 @@ module Stf
     end
 
     def byFilter(filter)
-      filter ? select {|d| d.checkFilter(filter)} : Array.new
+      filter ? select {|d| d.checkFilter(filter)} : []
     end
 
     def exceptFilter(filter)
       filter ? reject {|d| d.checkFilter(filter)} : this
+    end
+
+    def healthy(pattern)
+      pattern ? select { |d| d.isHealthy(pattern) } : this
+    end
+
+    # more pessimistic than healthy()
+    def healthyForConnect(pattern)
+      pattern ? select { |d| d.isHealthyForConnect(pattern) } : this
+    end
+
+    def notHealthy(pattern)
+      pattern ? reject { |d| d.isHealthy(pattern) } : []
     end
 
     def filterReadyToConnect

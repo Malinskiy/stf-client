@@ -7,7 +7,7 @@ module Stf
 
     extend self
 
-    program_desc 'Smartphone Test Lab client'
+    program_desc "Smartphone Test Lab client (version #{Stf::VERSION})"
 
     desc 'Be verbose'
     switch [:v, :verbose]
@@ -50,6 +50,10 @@ module Stf
       c.flag [:min]
       c.desc 'Filter key:value for devices'
       c.flag [:f, :filter]
+      c.desc 'Force filter check for connected devices'
+      c.switch [:forcefilter, :ff]
+      c.desc 'Check selected health parameters, could be any of the: battery,temperature,network,vpn,wifi'
+      c.flag [:health]
       c.desc 'Maximum session duration in seconds, 10800 (3h) by default'
       c.flag [:session]
       c.desc 'Maximum time to connect minimal quantity of devices in seconds, 120 (2m) by default'

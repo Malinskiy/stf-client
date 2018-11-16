@@ -8,6 +8,32 @@ module Stf
       getKeysNextLevel('', self)
     end
 
+    # more pessimistic decision
+    def isHealthyForConnect(pattern)
+      return true if pattern.nil?
+      health = isHealthy(pattern)
+      ppp = pattern.split(',')
+      ppp.each do |p|
+        health &&= getValue('battery.temp').to_i < 30 if ['t', 'temp', 'temperature'].include? p
+        health &&= getValue('battery.level').to_f > 30.0 if ['b', 'batt', 'battery'].include? p
+      end
+      health
+    end
+
+    def isHealthy(pattern)
+      return true if pattern.nil?
+      ppp = pattern.split(',')
+      health = true
+      ppp.each do |p|
+        health &&= getValue('battery.temp').to_i < 32 if ['t', 'temp', 'temperature'].include? p
+        health &&= getValue('battery.level').to_f > 20.0 if ['b', 'batt', 'battery'].include? p
+        health &&= getValue('network.connected') if ['n', 'net', 'network'].include? p
+        health &&= getValue('network.type') == 'VPN' if ['vpn'].include? p
+        health &&= getValue('network.type') == 'WIFI' if ['wifi'].include? p
+      end
+      health
+    end
+
     def checkFilter(filter)
       return true if filter.nil?
       key, value = filter.split(':', 2)
