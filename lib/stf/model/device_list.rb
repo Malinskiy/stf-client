@@ -41,11 +41,19 @@ module Stf
       #   CONNECTING = 4;
       #   AUTHORIZING = 5;
       # }
-      select {|d| d.ready == true && d.present == true && d.usage.nil? && d.status == 3 }
+      #
+      # https://github.com/openstf/stf/blob/93d9d7fe859bb7ca71669f375d841d94fa47d751/res/app/components/stf/device/enhance-device/enhance-device-service.js
+      select {|d|
+        d.present == true &&
+            d.status == 3 &&
+            d.ready == true &&
+            d.using == false &&
+            d.owner.nil?
+      }
     end
 
     def asConnectUrlList
-      @devices.map {|d| d.remoteConnectUrl}
+      @devices.map {|d| d.remoteConnectUrl}.reject { |c| c.nil? || c.empty? }
     end
 
     def select

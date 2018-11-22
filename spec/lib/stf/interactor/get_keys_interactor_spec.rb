@@ -11,7 +11,7 @@ describe Stf::GetKeysInteractor do
     keys = @interactor.execute
 
     expect(keys).to be_instance_of Array
-    expect(keys.length).to eq 65
+    expect(keys.length).to eq 66
     expect(keys.first).to eq 'abi'
   end
 
