@@ -17,9 +17,9 @@ module Stf
 
       stf_devices = DeviceList.new(DI[:stf].get_user_devices)
 
-      stf_devices = stf_devices.byFilter options[:byFilter] if options[:byFilter]
+      stf_devices = stf_devices.by_filter options[:byFilter] if options[:byFilter]
 
-      pending_disconnect = stf_devices.asConnectUrlList
+      pending_disconnect = stf_devices.as_connect_url_list
 
       pending_disconnect.each {|d| DI[:stop_debug_session_interactor].execute d}
     end

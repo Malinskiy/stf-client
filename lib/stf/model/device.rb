@@ -9,9 +9,9 @@ module Stf
     end
 
     # more pessimistic decision
-    def isHealthyForConnect(pattern)
+    def healthy_for_connect?(pattern)
       return true if pattern.nil?
-      health = isHealthy(pattern)
+      health = healthy?(pattern)
       ppp = pattern.split(',')
       ppp.each do |p|
         health &&= getValue('battery.temp').to_i < 30 if ['t', 'temp', 'temperature'].include? p
@@ -20,7 +20,7 @@ module Stf
       health
     end
 
-    def isHealthy(pattern)
+    def healthy?(pattern)
       return true if pattern.nil?
       ppp = pattern.split(',')
       health = true
@@ -34,7 +34,7 @@ module Stf
       health
     end
 
-    def checkFilter(filter)
+    def checkFilter?(filter)
       return true if filter.nil?
       key, value = filter.split(':', 2)
       getValue(key) == value

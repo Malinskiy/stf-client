@@ -87,14 +87,14 @@ module Stf
         end
 
         all_devices = DeviceList.new(DI[:stf].get_devices)
-        stf_devices = all_devices.filterReadyToConnect
-        stf_devices = stf_devices.byFilter(filter) if filter
-        stf_devices = stf_devices.healthyForConnect(healthcheck) if healthcheck
+        stf_devices = all_devices.select_ready_to_connect
+        stf_devices = stf_devices.by_filter(filter) if filter
+        stf_devices = stf_devices.select_healthy_for_connect(healthcheck) if healthcheck
 
         if all_flag
           to_connect = stf_devices.size
         else
-          connected = devices & all_devices.asConnectUrlList
+          connected = devices & all_devices.as_connect_url_list
           to_connect = wanted - connected.size
         end
 
@@ -116,8 +116,8 @@ module Stf
 
     def count_connected_devices(filter)
       stf_devices = DeviceList.new(DI[:stf].get_user_devices)
-      stf_devices = stf_devices.byFilter(filter) if filter
-      connected = devices & stf_devices.asConnectUrlList
+      stf_devices = stf_devices.by_filter(filter) if filter
+      connected = devices & stf_devices.as_connect_url_list
       connected.size
     end
 
@@ -126,7 +126,7 @@ module Stf
       stf_devices = DeviceList.new(DI[:stf].get_user_devices)
 
       if filter && force_filter
-        disconnect_because_filter = stf_devices.exceptFilter(filter).asConnectUrlList
+        disconnect_because_filter = stf_devices.except_filter(filter).as_connect_url_list
         unless disconnect_because_filter.empty?
           logger.info 'will be disconnected by filter: ' + disconnect_because_filter.join(',')
           to_disconnect += disconnect_because_filter
@@ -134,14 +134,14 @@ module Stf
       end
 
       if healthcheck
-        disconnect_by_health = stf_devices.notHealthy(healthcheck).asConnectUrlList
+        disconnect_by_health = stf_devices.select_not_healthy(healthcheck).as_connect_url_list
         unless disconnect_by_health.empty?
           logger.info 'will be disconnected by health check: ' + disconnect_by_health.join(',')
           to_disconnect += disconnect_by_health
         end
       end
 
-      dead_persons = stf_devices.asConnectUrlList - devices
+      dead_persons = stf_devices.as_connect_url_list - devices
       unless dead_persons.empty?
         logger.info 'will be disconnected because not present locally: ' + dead_persons.join(',')
         to_disconnect += dead_persons
