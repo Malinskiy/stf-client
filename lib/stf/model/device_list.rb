@@ -11,15 +11,28 @@ module Stf
       end
     end
 
-    def byFilter(filter)
-      filter ? select {|d| d.checkFilter(filter)} : Array.new
+    def by_filter(filter)
+      filter ? select {|d| d.checkFilter?(filter)} : []
     end
 
-    def exceptFilter(filter)
-      filter ? reject {|d| d.checkFilter(filter)} : this
+    def except_filter(filter)
+      filter ? reject {|d| d.checkFilter?(filter)} : this
     end
 
-    def filterReadyToConnect
+    def select_healthy(pattern)
+      pattern ? select { |d| d.healthy?(pattern) } : this
+    end
+
+    # more pessimistic than healthy()
+    def select_healthy_for_connect(pattern)
+      pattern ? select { |d| d.healthy_for_connect?(pattern) } : this
+    end
+
+    def select_not_healthy(pattern)
+      pattern ? reject { |d| d.healthy?(pattern) } : []
+    end
+
+    def select_ready_to_connect
       # https://github.com/openstf/stf/blob/93d9d7fe859bb7ca71669f375d841d94fa47d751/lib/wire/wire.proto#L170
       # enum DeviceStatus {
       #   OFFLINE = 1;
@@ -28,11 +41,19 @@ module Stf
       #   CONNECTING = 4;
       #   AUTHORIZING = 5;
       # }
-      select {|d| d.ready == true && d.present == true && d.usage.nil? && d.status == 3 }
+      #
+      # https://github.com/openstf/stf/blob/93d9d7fe859bb7ca71669f375d841d94fa47d751/res/app/components/stf/device/enhance-device/enhance-device-service.js
+      select {|d|
+        d.present == true &&
+            d.status == 3 &&
+            d.ready == true &&
+            d.using == false &&
+            d.owner.nil?
+      }
     end
 
-    def asConnectUrlList
-      @devices.map {|d| d.remoteConnectUrl}
+    def as_connect_url_list
+      @devices.map {|d| d.remoteConnectUrl}.reject { |c| c.nil? || c.empty? }
     end
 
     def select
