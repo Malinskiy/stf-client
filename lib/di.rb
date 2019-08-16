@@ -9,6 +9,7 @@ require 'stf/interactor/stop_all_debug_sessions_interactor'
 require 'stf/interactor/remove_all_user_devices_interactor'
 require 'stf/interactor/get_keys_interactor'
 require 'stf/interactor/get_values_interactor'
+require 'stf/interactor/add_adb_public_key'
 require 'stf/validate/uri_validator'
 
 class DI
@@ -63,6 +64,10 @@ class DI
 
       c.register(:uri_validator,
                  -> {Stf::URIValidator.new},
+                 memoize: true)
+
+      c.register(:add_adb_public_key_interactor,
+                 -> {Stf::AddAdbPublicKeyInteractor.new},
                  memoize: true)
     end
 
