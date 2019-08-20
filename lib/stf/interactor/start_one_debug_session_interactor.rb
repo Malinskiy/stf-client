@@ -36,7 +36,7 @@ module Stf
         shell('echo adbtest', {serial: "#{result.remoteConnectUrl}"}, 30)
         raise ADBError, "Could not execute shell test" unless stdout_contains "adbtest"
 
-        return true
+        return result.remoteConnectUrl
 
       rescue StandardError, SignalException => e
         begin
@@ -52,7 +52,7 @@ module Stf
         end
 
         logger.error "Failed to connect to #{serial}: " + e&.message
-        return false
+        return nil
       end
     end
 

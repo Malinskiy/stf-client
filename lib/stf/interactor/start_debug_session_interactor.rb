@@ -16,7 +16,7 @@ module Stf
       filter = opts[:filter]
       max_n = opts[:n].to_i > 0 ? opts[:n].to_i : 1
       start_timeout = opts[:starttime].to_i > 0 ? opts[:starttime].to_i : 120
-      session = opts[:worktime].to_i > 0 ? opts[:session].to_i : 10800
+      session = opts[:session].to_i > 0 ? opts[:session].to_i : 10800
       min_n = opts[:min].to_s.empty? ? (max_n + 1) / 2 : [opts[:min].to_i, max_n].min
       healthcheck = opts[:health]
       force_filter = opts[:forcefilter]
