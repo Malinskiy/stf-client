@@ -49,6 +49,7 @@ COMMANDS
     disconnect - Disconnect device(s) from local adb server and remove device(s) from user devices in STF
     help       - Shows a list of commands or help for one command
     keys       - Show available keys for filtering
+    share      - Share available devices in STF with other agents and attach it to local adb server
     values     - Show known values for the filtering key
     
 ENVIRONMENT VARIABLES
