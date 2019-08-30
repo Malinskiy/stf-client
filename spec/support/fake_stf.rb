@@ -49,6 +49,12 @@ class FakeSTF < Sinatra::Base
     json_response 200, 'user/DELETE_devices.json'
   end
 
+  post '/api/v1/user/adbPublicKeys' do
+    return 404 unless @env['HTTP_AUTHORIZATION'].eql? "Bearer #{FakeSTF.fake_token}"
+
+    json_response 200, 'user/POST_adbPublicKeys.json'
+  end
+
   private
 
   def json_response(response_code, file_name)
