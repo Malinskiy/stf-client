@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'dante', '~> 0.2.0'
   spec.add_runtime_dependency 'dry-container', '~> 0.6.0'
   spec.add_runtime_dependency 'dry-configurable', '~> 0.8.3'
+  spec.add_runtime_dependency 'childprocess', '~> 3.0.0'
 
   # spec.add_runtime_dependency 'pry', '~> 0.10.4'
 
