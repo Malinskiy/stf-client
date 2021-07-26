@@ -20,16 +20,16 @@ module Stf
     end
 
     def select_healthy(pattern)
-      pattern ? select { |d| d.healthy?(pattern) } : this
+      pattern ? select {|d| d.healthy?(pattern)} : this
     end
 
     # more pessimistic than healthy()
     def select_healthy_for_connect(pattern)
-      pattern ? select { |d| d.healthy_for_connect?(pattern) } : this
+      pattern ? select {|d| d.healthy_for_connect?(pattern)} : this
     end
 
     def select_not_healthy(pattern)
-      pattern ? reject { |d| d.healthy?(pattern) } : []
+      pattern ? reject {|d| d.healthy?(pattern)} : []
     end
 
     def select_ready_to_connect
@@ -52,8 +52,20 @@ module Stf
       }
     end
 
+    def select_using_by_someone_else
+      select {|d|
+        d.present == true &&
+            d.status == 3 &&
+            d.ready == true &&
+            d.using == false &&
+            !d.owner.nil? &&
+            !d.owner.name.nil? &&
+            !d.owner.name.empty?
+      }
+    end
+
     def as_connect_url_list
-      @devices.map {|d| d.remoteConnectUrl}.reject { |c| c.nil? || c.empty? }
+      @devices.map {|d| d.remoteConnectUrl}.reject {|c| c.nil? || c.empty?}
     end
 
     def select

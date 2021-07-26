@@ -68,6 +68,26 @@ module Stf
       end
     end
 
+    desc 'Share available devices in STF with other agents and attach it to local adb server'
+    command :share do |c|
+      c.desc 'Filter key:value for devices'
+      c.flag [:f, :filter]
+      c.desc 'Check selected health parameters, could be any of the: battery,temperature,network,vpn,wifi'
+      c.flag [:health]
+      c.desc 'Maximum session duration in seconds, 10800 (3h) by default'
+      c.flag [:session]
+      c.desc 'Maximum time to connect minimal quantity of devices in seconds, 120 (2m) by default'
+      c.flag [:starttime]
+      c.desc 'Do not start daemon'
+      c.switch [:nodaemon]
+
+      c.action do |_, options, _|
+        unless DI[:start_debug_share_interactor].execute(options)
+          raise GLI::CustomExit.new('Connect failed', 1)
+        end
+      end
+    end
+
     desc 'Show available keys for filtering'
     command :keys do |c|
       c.action {puts DI[:get_keys_interactor].execute}

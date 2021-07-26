@@ -3,12 +3,14 @@ require 'dante'
 require 'stf/system/demonizer'
 
 require 'stf/interactor/start_debug_session_interactor'
+require 'stf/interactor/start_debug_share_interactor'
 require 'stf/interactor/start_one_debug_session_interactor'
 require 'stf/interactor/stop_debug_session_interactor'
 require 'stf/interactor/stop_all_debug_sessions_interactor'
 require 'stf/interactor/remove_all_user_devices_interactor'
 require 'stf/interactor/get_keys_interactor'
 require 'stf/interactor/get_values_interactor'
+require 'stf/share/decision'
 require 'stf/interactor/add_adb_public_key'
 require 'stf/validate/uri_validator'
 
@@ -34,8 +36,16 @@ class DI
                  -> {Stf::Client.new(opts[:url], opts[:token])},
                  memoize: true)
 
+      c.register(:share_decision,
+                 -> {Stf::Decision.new},
+                 memoize: true)
+
       c.register(:start_debug_session_interactor,
                  -> {Stf::StartDebugSessionInteractor.new},
+                 memoize: true)
+
+      c.register(:start_debug_share_interactor,
+                 -> {Stf::StartDebugShareInteractor.new(c[:share_decision])},
                  memoize: true)
 
       c.register(:start_one_debug_session_interactor,
