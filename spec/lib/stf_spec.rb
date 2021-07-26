@@ -66,4 +66,10 @@ describe Stf::Client do
     expect(actual.length).to eq expected
   end
 
+  it 'should correctly add adb public key' do
+    result = @stf.add_adb_public_key 'UDKDU15A20001021 foo@foo.foo'
+
+    expect(result).to be true
+  end
+
 end

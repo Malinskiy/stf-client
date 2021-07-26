@@ -122,6 +122,19 @@ module Stf
       c.action {DI[:remove_all_user_devices_interactor].execute}
     end
 
+    desc 'Add adb public key into STF'
+    command :trustme do |c|
+      c.desc 'Location of adb public key'
+      c.flag [:k, :adb_public_key_location]
+      c.default_value '~/.android/adbkey.pub'
+
+      c.action do |_, options, _|
+        filename = File.expand_path(options[:adb_public_key_location])
+        exit_now!("File does not exist: '#{options[:adb_public_key_location]}'") unless File.exist? filename
+        DI[:add_adb_public_key_interactor].execute(options[:adb_public_key_location])
+      end
+    end
+
     exit run(ARGV)
   end
 end

@@ -54,6 +54,11 @@ module Stf
       return response.success
     end
 
+    def add_adb_public_key(adb_public_key)
+      response = execute '/api/v1/user/adbPublicKeys', Net::HTTP::Post, { publickey: adb_public_key }.to_json
+      return response.success
+    end
+
     private
 
     def execute(relative_url, type, body='')
